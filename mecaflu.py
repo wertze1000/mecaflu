@@ -89,3 +89,25 @@ def deriv(f_left, f_c, f_right, type_left, type_c, type_right, h):
     else:
         v=0.0
     return v
+
+def circu(u,v,x,y):
+    n=len(x) #nombre d'éléments
+    c=0.0
+    for i in range(n-1):
+#je fais 4 cas représentant les 4 cas de parcours d'une circulation rectangulaire
+        #(0,0) -> (1,0)  vers là droite
+        if(x[i] < x[i+1] and y[i] == y[i+1]):
+            c = c + ((x[i+1] - x[i])/2)*(u[i+1] + u[i] )
+        #(1,1) -> (0,1) vers la gauche
+        elif(x[i] > x[i+1] and y[i] == y[i+1]):
+            c = c - ((x[i] - x[i+1])/2)*(u[i+1] + u[i] )
+        #(0,1) -> (0,0) vers le bas 
+        elif(x[i] == x[i+1] and y[i] > y[i+1]):
+            c = c - ((y[i] - y[i+1])/2)*(v[i+1] + v[i] )
+        #(1,0) -> (1,1) vers le haut
+        elif(x[i] == x[i+1] and y[i] < y[i+1]):
+            c = c + ((y[i+1] - y[i])/2)*(v[i+1] + v[i] )
+        else:
+            c= c +0.0
+    return c
+
