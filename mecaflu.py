@@ -48,7 +48,7 @@ def Laplace(dom, num, cl_d):
                 
                 A_full = np.append(A_full, A)
                 k_full = np.append(k_full, k)
-                b_vec = np.append(b_vec, cl_d[i,j])
+                b_vec = np.append(b_vec, b)
                 n_vec = np.append(n_vec, num[i,j] - 1)
 
                 line = A #On a besoin de la taille de A
