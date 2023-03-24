@@ -1,23 +1,22 @@
 import numpy as np
 from scipy.sparse import csc_matrix
+from scipy.sparse import linalg
 #laplace()#3 matrices DOM, NUM, CL, retourne une matrice psy
 
 NUM = np.loadtxt('./data/1-num.txt', dtype = int)
 DOM = np.loadtxt('./data/1-dom.txt', dtype = int)
-CL_D = np.loadtxt('./data/1-cl.txt', dtype = int)
+CL_D = np.loadtxt('./data/1-cl.txt', dtype = float)
 
 def getCoeff(num_left, num_right, num_down, num_up, num_cent, type_cent, cl_cent):
      #cefficients
-
+    
 
     if(type_cent == 1):
         A = np.array([[1],[1],[1],[1],[-4]], dtype = int)
         j = np.array([[num_left], [num_right], [num_down], [num_up], [num_cent]], dtype = int)
         b = 0
-        print(A)
-        print(j)
-
-
+        
+        
     elif(type_cent == 2):
         A = np.array([[1]], dtype = int)
         j = np.array([[num_cent]], dtype = int)
@@ -30,36 +29,48 @@ def getCoeff(num_left, num_right, num_down, num_up, num_cent, type_cent, cl_cent
     else:
         A, j = np.zeros(2)
         b = 0
-
+    
     return j, A, b
 
 def Laplace(dom, num, cl_d):
-    length_b = (len(dom) - 2)*(len(dom[0]) - 2)
-    b_vec = np.zeros(length_b + 1)
-
+    b_vec   = np.array([], dtype = float)
+    b       = np.array([0.0], dtype = float)
+    n_vec   = np.array([], dtype = int)
+    n       = np.array([0], dtype = int)
+    #[] pour pas avoir "built in function et dtype pour avoir des int car spare prend que Ã§a
+    A_full = np.array([], dtype = int)
+    k_full = np.array([],dtype = int)
+    line_full = np.array([], dtype = int)
     for i in range(len(dom[0])):
         for j in range(len(dom)):
-            if(dom[i,j] == 0):
+             if(dom[i,j] == 0):
                 continue
-            else:
-                A_full = []
-                k_full = []
-                line_full = []
-
+             else:
                 k, A, b = getCoeff(num[i - 1, j], num[i + 1, j], num[i, j - 1], num[i, j + 1], num[i, j], dom[i, j], cl_d[i, j])
-                A_full.append(A)
-                k_full.append(k)
+                A_full = np.append(A_full, A)
+                k_full = np.append(k_full, k)
+                b = cl_d[i,j]
+                b_vec = np.append(b_vec,b)
+                n[0] = num[i,j] - 1
+                n_vec = np.append(n_vec,n)
                 line = A
-
-                b_vec[num[i,j]] = cl_d[i,j]
-                for l in range(len(A[0])):
+                for l in range(len(A)):
                     line[l] = num[i,j]
+                
+                line_full = np.append(line_full, line)
 
-                line_full.append(line)
-
-    print(A_full, k_full, line_full)
+    b_sparse = csc_matrix((b_vec, (n_vec, n_vec)))
+    one = np.ones(len(b_vec))
+    print(one)
+    one_vert = one.reshape(len(b_vec),1)
+    print(one_vert)
+    b_final = csc_matrix.multiply(b_sparse, one_vert)
+    print(b_final)
+    k_full = k_full - 1
+    line_full = line_full - 1
     A_sparse = csc_matrix((A_full, (line_full, k_full)))
-    print(A_sparse)
-    return A_sparse
+    return linalg.spsolve(A_sparse, b_final)
 
-Sparse = Laplace(DOM, NUM, CL_D)
+
+lp=Laplace(DOM, NUM, CL_D)
+print(lp)
