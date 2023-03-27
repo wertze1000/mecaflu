@@ -76,7 +76,7 @@ print(lp)
 
 def deriv(f_left, f_c, f_right, type_left, type_c, type_right, h):
     v=0.0
-    if(type_c == 1): #derivée centré
+    if(type_c == 1): #derivée centrée
         v=(f_right - f_left)/(2*h)
     
     elif(type_c == 2):
