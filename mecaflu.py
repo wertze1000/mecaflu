@@ -81,7 +81,7 @@ def Laplace(dom, num, cl_d):
                 continue
             else:
                 laplacian[i,j] = psi[num[i, j] - 1]
-    return laplacian
+    return laplacian, psi
 
 def deriv(f_left, f_c, f_right, type_left, type_c, type_right, h):
     v = 0.0
@@ -106,11 +106,11 @@ def circu(u,v,x,y):
     for i in range(n-1):
         #je fais 2 cas représentant les 2 cas de parcours d'une circulation rectangulaire:
         #déplacement horizontal
-        if(y[i] == y[i+1]):
+        if(y[i] == y[i + 1]):
             c = c + ((x[i + 1] - x[i])/2)*(u[i + 1] + u[i] )
 
         #déplacement vertical
-        elif(x[i] == x[i+1]):
+        elif(x[i] == x[i + 1]):
             c = c + ((y[i + 1] - y[i])/2)*(v[i + 1] + v[i] )
         else:
             c = c + 0.0
@@ -124,9 +124,29 @@ def force(p,x,y):
         fy = fy - ((y[i+1] - y[i])/2)*(p[i+1] + p[i] )
     return fx, fy
         
-lap = Laplace(DOM, NUM, CL_D) #psi
+#psi de Laplace !
+def velocity(laplacian, psi, dom, num, h):
+    u = np.zeros(len(psi))
+    v = np.zeros(len(psi))
+
+    for i in range(len(laplacian)):
+        for j in range(len(laplacian[0])):
+                if(num[i, j] == 0.0):
+                    continue
+                else:
+                    v[num[i, j] - 1] = -deriv(laplacian[i - 1, j], laplacian[i, j], laplacian[i + 1, j], dom[i - 1, j], dom[i, j], dom[i + 1, j], h)
+                    u[num[i, j] - 1] = deriv(laplacian[i, j - 1], laplacian[i, j], laplacian[i, j + 1], dom[i, j - 1], dom[i, j], dom[i, j + 1], h)
+
+    return u, v
+
+### --TEST-- ###
+lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
 print(lap)
-fig, ax0 = plt.subplots(1, 1)
-c = ax0.pcolor(lap, cmap = plt.cm.plasma)
-fig.colorbar(c, ax = ax0)
-plt.show()
+u, v = velocity(lap, psi, DOM, NUM, 0.5)
+print("V =", u,"U =", v)
+
+### --COLORIAGE-- ###
+#fig, ax0 = plt.subplots(1, 1)
+#c = ax0.pcolor(lap, cmap = plt.cm.plasma)
+#fig.colorbar(c, ax = ax0)
+#plt.show()
