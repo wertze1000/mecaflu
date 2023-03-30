@@ -143,7 +143,7 @@ def velocity(laplacian, psi, dom, num, h):
 lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
 print(lap)
 u, v = velocity(lap, psi, DOM, NUM, 0.5)
-print("V =", u,"U =", v)
+print("V =", v,"U =", u)
 
 ### --COLORIAGE-- ###
 #fig, ax0 = plt.subplots(1, 1)
