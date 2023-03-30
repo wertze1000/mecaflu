@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.sparse import csc_matrix
 from scipy.sparse import linalg
+import matplotlib.pyplot as plt
 
 NUM = np.loadtxt('./data/1-num.txt', dtype = int)
 DOM = np.loadtxt('./data/1-dom.txt', dtype = int)
@@ -35,7 +36,9 @@ def Laplace(dom, num, cl_d):
     A_full = np.array([], dtype = int) #[] pour pas avoir "built in function" et dtype pour avoir des int car sparse prend que int.
     k_full = np.array([],dtype = int)
     line_full = np.array([], dtype = int)
-    
+
+    laplacian = np.zeros(shape = num.shape, dtype = float)
+
     for i in range(len(dom[0])): #iteration sur les lignes
 
         for j in range(len(dom)):   #iteration sur les colonnes
@@ -49,11 +52,11 @@ def Laplace(dom, num, cl_d):
                 A_full = np.append(A_full, A)
                 k_full = np.append(k_full, k)
                 b_vec = np.append(b_vec, b)
-                n_vec = np.append(n_vec, num[i,j] - 1)
+                n_vec = np.append(n_vec, num[i, j] - 1)
 
                 line = A #On a besoin de la taille de A
                 for l in range(len(A)):
-                    line[l] = num[i,j]
+                    line[l] = num[i, j]
                 
                 line_full = np.append(line_full, line)
 
@@ -68,48 +71,62 @@ def Laplace(dom, num, cl_d):
 
     A_sparse = csc_matrix((A_full, (line_full, k_full)))
     
-    return linalg.spsolve(A_sparse, b_final)
+    psi = linalg.spsolve(A_sparse, b_final)
 
+    for i in range(len(num)):
 
-lp = Laplace(DOM, NUM, CL_D)
-print(lp)
+        for j in range(len(num[0])):
+
+            if(num[i,j] == 0):
+                continue
+            else:
+                laplacian[i,j] = psi[num[i, j] - 1]
+    return laplacian
 
 def deriv(f_left, f_c, f_right, type_left, type_c, type_right, h):
-    v=0.0
+    v = 0.0
+    #Formules slide 33 /!\
     if(type_c == 1): #derivée centrée
-        v=(f_right - f_left)/(2*h)
+        v = (f_right - f_left)/(2 * h)
     
     elif(type_c == 2):
         if(type_right == 0): #décentrée arrière(bord droit par exemple)
-            v=(f_c - f_left)/h
+            v = (f_c - f_left)/h
         else:               #décentrée avant
-            v=(f_right - f_c)/h
+            v = (f_right - f_c)/h
     elif(type_c == 0):
-        v=0.0
+        v = 0.0
     else:
-        v=0.0
+        v = 0.0
     return v
 
 def circu(u,v,x,y):
-    n=len(x) #nombre d'éléments
-    c=0.0
+    n = len(x) #nombre d'éléments
+    c = 0.0
     for i in range(n-1):
-#je fais 2 cas représentant les 2 cas de parcours d'une circulation rectangulaire
-        #déplacement horizontale
+        #je fais 2 cas représentant les 2 cas de parcours d'une circulation rectangulaire:
+        #déplacement horizontal
         if(y[i] == y[i+1]):
-            c = c + ((x[i+1] - x[i])/2)*(u[i+1] + u[i] )
-        #déplacement verticale
+            c = c + ((x[i + 1] - x[i])/2)*(u[i + 1] + u[i] )
+
+        #déplacement vertical
         elif(x[i] == x[i+1]):
-            c = c + ((y[i+1] - y[i])/2)*(v[i+1] + v[i] )
+            c = c + ((y[i + 1] - y[i])/2)*(v[i + 1] + v[i] )
         else:
-            c= c +0.0
+            c = c + 0.0
     return c
 
 def force(p,x,y):
-    fx=0.0
-    fy=0.0
-    for i in range(len(x)-1):
+    fx = 0.0
+    fy = 0.0
+    for i in range(len(x) - 1):
         fx = fx + ((x[i+1] - x[i])/2)*(p[i+1] + p[i] )
-        fy = fy + ((y[i+1] - y[i])/2)*(p[i+1] + p[i] )
+        fy = fy - ((y[i+1] - y[i])/2)*(p[i+1] + p[i] )
     return fx, fy
         
+lap = Laplace(DOM, NUM, CL_D) #psi
+print(lap)
+fig, ax0 = plt.subplots(1, 1)
+c = ax0.pcolor(lap, cmap = plt.cm.plasma)
+fig.colorbar(c, ax = ax0)
+plt.show()
