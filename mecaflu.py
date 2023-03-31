@@ -39,9 +39,9 @@ def Laplace(dom, num, cl_d):
 
     laplacian = np.zeros(shape = num.shape, dtype = float)
 
-    for i in range(len(dom[0])): #iteration sur les lignes
+    for i in range(len(dom)): #iteration sur les lignes
 
-        for j in range(len(dom)):   #iteration sur les colonnes
+        for j in range(len(dom[0])):   #iteration sur les colonnes
              
              if(dom[i,j] == 0): #si on arrive à un zéro on skip
                 continue
