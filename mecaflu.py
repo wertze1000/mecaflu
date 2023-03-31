@@ -138,6 +138,28 @@ def velocity(laplacian, psi, dom, num, h):
                     u[num[i, j] - 1] = deriv(laplacian[i, j - 1], laplacian[i, j], laplacian[i, j + 1], dom[i, j - 1], dom[i, j], dom[i, j + 1], h)
 
     return u, v
+def norm(x,y):
+    return np.sqrt(x*x + y*y)
+
+def pressure(u,v):
+    p=np.zeros(len(u), dtype=float)
+    for i in range(len(p)):
+        p[i]=rho*0.5*(norm(u[i],v[i]))*(norm(u[i],v[i]))
+    return p
+
+def velocity_field(u,v,num):
+    U = np.zeros(shape = num.shape, dtype = float)
+    V = np.zeros(shape = num.shape, dtype = float)
+    for i in range(len(num)):
+
+        for j in range(len(num[0])):
+
+            if(num[i,j] == 0):
+                continue
+            else:
+                U[i,j] = u[num[i, j] - 1]
+                V[i,j] = v[num[i, j] - 1]
+    return U, V
 
 ### --TEST-- ###
 lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
