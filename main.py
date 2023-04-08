@@ -15,11 +15,11 @@ DOM = np.rot90(np.loadtxt('./data/4-dom.txt', dtype = int))
 CONTOUR=np.loadtxt('./data/4-contourObj.txt', dtype = int)
 
 #paramètres
-débit=(10*7 + 5*5)*0.1
+débit=(10*7 + 5*5) * 0.1
 rho= 1000
              
 ### --TEST-- ###
-CL_D=cl4(DOM,débit)
+CL_D = cl4(DOM,débit)
 lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
 print(lap)
 u, v = velocity(lap, psi, DOM, NUM, 2)
@@ -34,12 +34,12 @@ c = ax0.pcolor(vn, cmap = plt.cm.plasma)
 ax0.set_aspect('equal','box')
 
 ### --STREAMPLOT-- ###
-x_grid=CL=np.zeros(shape= DOM.shape, dtype= int)
-y_grid=CL=np.zeros(shape= DOM.shape, dtype= int)
+x_grid=CL=np.zeros(shape = DOM.shape, dtype = int)
+y_grid=CL=np.zeros(shape = DOM.shape, dtype = int)
 for i in range(len(DOM)):
     for j in range(len(DOM[0])):
-        x_grid[i,j]=i
-        y_grid[i,j]=j
+        x_grid[i,j] = i
+        y_grid[i,j] = j
 ax0.streamplot(y_grid, x_grid, vy, vx, color='white',density=1)
 fig.colorbar(c, ax = ax0)
 plt.show()
