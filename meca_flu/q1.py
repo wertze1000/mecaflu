@@ -176,6 +176,15 @@ vx, vy=velocity_field(u, v, NUM)
 
 ### --COLORIAGE-- ###
 fig, ax0 = plt.subplots(1, 1)
-c = ax0.pcolor(vx, cmap = plt.cm.plasma)
+c = ax0.pcolor(vx ,cmap = plt.cm.plasma)
+ax0.set_aspect('equal','box')
+x_grid=CL=np.zeros(shape= DOM.shape, dtype= int)
+y_grid=CL=np.zeros(shape= DOM.shape, dtype= int)
+for i in range(len(DOM)):
+    for j in range(len(DOM[0])):
+        x_grid[i,j]=j
+        y_grid[i,j]=i
+print(x_grid)
+ax0.streamplot(x_grid, y_grid, vx, vy)
 fig.colorbar(c, ax = ax0)
 plt.show()

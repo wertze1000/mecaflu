@@ -17,6 +17,7 @@ def velocity(laplacian, psi, dom, num, h):
 def velocity_field(u,v,num):
     U = np.zeros(shape = num.shape, dtype = float)
     V = np.zeros(shape = num.shape, dtype = float)
+    N = np.zeros(shape = num.shape, dtype = float)
     for i in range(len(num)):
 
         for j in range(len(num[0])):
@@ -26,4 +27,5 @@ def velocity_field(u,v,num):
             else:
                 U[i,j] = u[num[i, j] - 1]
                 V[i,j] = v[num[i, j] - 1]
-    return U, V
+                N[i,j] = np.sqrt(U[i,j]*U[i,j] + V[i,j]*V[i,j])
+    return U, V, N

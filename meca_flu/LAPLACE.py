@@ -16,7 +16,6 @@ def Laplace(dom, num, cl_d):
     line_full = np.array([], dtype = int)
 
     laplacian = np.zeros(shape = num.shape, dtype = float)
-    print(len(dom),len(dom[0]))
 
     for i in range(len(dom)): #iteration sur les lignes
 
