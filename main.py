@@ -16,8 +16,8 @@ from CONTOUR import contourCas4
 #importation des matrices
 NUM = np.rot90(np.loadtxt('./data/4-num.txt', dtype = int))
 DOM = np.rot90(np.loadtxt('./data/4-dom.txt', dtype = int))
-#CL_D = np.rot90(np.loadtxt('./data/1-cl.txt', dtype = float))
-CONTOUR=np.loadtxt('./data/4-contourObj.txt', dtype = int)
+#CL_D = np.rot90(np.loadtxt('./data/3-cl.txt', dtype = float))
+CONTOUR = np.loadtxt('./data/4-contourObj.txt', dtype = int)
 
 
 #paramètres
@@ -34,13 +34,14 @@ p = pressure(v, u, rho)
 pfield = pressure_field(p, NUM)
 
 #calculs cas 4
-n, x, y = contourCas4(CONTOUR,NUM)
+n, x, y = contourCas4(CONTOUR, NUM)
+#x, y, n = contourCas4(CONTOUR, NUM)
 uf, vf = contour_vitesse(n, v, u)
 circulation = circu(uf, vf, x, y)
 print("Circulation = ", circulation)
 pf = pressure(uf, vf, rho)
 fx, fy = force(pf, x, y)
-print("Traînée (fx) =",fx ," Portance (fy) =" ,fy)
+print("Traînée (fx) =", fx ," Portance (fy) =" , fy)
 
 
 ### --COLORIAGE + PLOT-- ###

@@ -51,5 +51,5 @@ def cl4(DOM,débit): #Uniqument pour le cas 4
         for j in range(size_line):
             if(j < size_line - 2 and i > 1 and j > 1 and i < size_column - 2):
                 if(DOM[i][j] == 2):
-                   CL[i][j] = débit / 4.2               
+                   CL[i][j] = débit / 4             
     return CL
