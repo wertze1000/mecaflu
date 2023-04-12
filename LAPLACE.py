@@ -12,7 +12,7 @@ def Laplace(dom, num, cl_d):
     n_vec   = np.array([], dtype = int)
     
     A_full = np.array([], dtype = int) #[] pour pas avoir "built in function" et dtype pour avoir des int car sparse prend que int.
-    k_full = np.array([],dtype = int)
+    k_full = np.array([], dtype = int)
     line_full = np.array([], dtype = int)
 
     laplacian = np.zeros(shape = num.shape, dtype = float)
