@@ -41,26 +41,26 @@ def contour(DOM,NUM):
         n = np.append(n, NUM[i_bord][j_bord + i])
 
     for i in range(size_column): #bord droit
-        if(DOM[i_bord + i,j_bord] == 1):
-            i_bord = i_bord -1 + i
+        if(DOM[i_bord + i, j_bord] == 1):
+            i_bord = i_bord - 1 + i
             break
 
-        x=np.append(x,j_bord)
-        y=np.append(y,i_bord + i)
-        n=np.append(n,NUM[i_bord + i][j_bord])
+        x = np.append(x, j_bord)
+        y = np.append(y, i_bord + i)
+        n = np.append(n, NUM[i_bord + i][j_bord])
 
     for i in range(size_line): #bord inf
-        if(DOM[i_bord,j_bord - i] == 1):
-            j_bord = j_bord + 1 -i
+        if(DOM[i_bord, j_bord - i] == 1):
+            j_bord = j_bord + 1 - i
             break
 
-        x=np.append(x,j_bord - i)
-        y=np.append(y,i_bord)
-        n=np.append(n,NUM[i_bord][j_bord - i])
+        x=np.append(x, j_bord - i)
+        y=np.append(y, i_bord)
+        n=np.append(n, NUM[i_bord][j_bord - i])
 
     for i in range(size_column): #bord droit
         if(DOM[i_bord - i, j_bord] == 1):
-            i_bord = i_bord + 1 -i
+            i_bord = i_bord + 1 - i
             break
 
         x=np.append(x, j_bord)
@@ -75,10 +75,10 @@ def contour_vitesse(n, u, v):
     
     for i in range(len(uf)):
         
-        uf[i]=u[n[i]-1]
-        vf[i]=v[n[i]-1]
+        uf[i]=u[n[i] - 1]
+        vf[i]=v[n[i] - 1]
     
-    return uf,vf
+    return uf, vf
 
 def contourCas4(contour, num): #Dans le sens aire à droite
 
@@ -91,11 +91,9 @@ def contourCas4(contour, num): #Dans le sens aire à droite
     for i in range(nbLines):
         coordNoeudX[0,i] = contour[i,0]
         coordNoeudY[0,i] = yDim - contour[i,1]
-        noeudsContour[0,i] = num[contour[i,1], contour[i,0]]
-        #print("x,y = [", coordNoeudX[0, i], ", ", coordNoeudY[0, i], "]")
+        noeudsContour[0,i] = num[contour[i,1], contour[i,0]] 
+        #Recherche de la valeur du noeud dans NUM sur base des coordonnées trouvées
 
-    #print("Lines", nbLines,"Columns", nbColumns, noeudsContour, "nbNoeuds:", np.shape(noeudsContour))
-    #print("XCOORD flipped:", coordNoeudX, "YCOORD flipped", coordNoeudY)
     return noeudsContour.flatten(), coordNoeudX.flatten(), coordNoeudY.flatten()
     
     

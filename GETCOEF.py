@@ -1,7 +1,4 @@
 import numpy as np
-from scipy.sparse import csc_matrix
-from scipy.sparse import linalg
-import matplotlib.pyplot as plt
 
 def getCoeff(num_left, num_right, num_down, num_up, num_cent, type_cent, cl_cent):
 

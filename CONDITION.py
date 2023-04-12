@@ -1,8 +1,10 @@
 import numpy as np
+
 def cl(DOM,débit):
     CL = np.zeros(shape = DOM.shape, dtype = float)
     size_line = len(DOM[0])
     size_column = len(DOM)
+
     #condition horizontale
     for i in range(size_line - 1):
         if(i > 0 and i < size_line - 1):
@@ -16,7 +18,8 @@ def cl(DOM,débit):
             transform = (size_column - 1) - i - 1
             CL[i][1] = transform * pas
             CL[i][size_line-2] = transform * pas
-    #condtion ilo
+
+    #condtion ilôt
     for i in range(size_column):
         for j in range(size_line):
             if(j < size_line - 2 and i > 1 and j > 1 and i < size_column - 2):
@@ -25,9 +28,10 @@ def cl(DOM,débit):
     return CL
 
 def cl4(DOM,débit): #Uniqument pour le cas 4
-    CL=np.zeros(shape = DOM.shape, dtype = float)
-    size_line=len(DOM[0])
-    size_column=len(DOM)
+    CL = np.zeros(shape = DOM.shape, dtype = float)
+    size_line = len(DOM[0])
+    size_column = len(DOM)
+    
     #condition horizontale
     for i in range(size_line - 1):
         if(i > 0 and i < size_line - 1):
@@ -41,10 +45,11 @@ def cl4(DOM,débit): #Uniqument pour le cas 4
             transform = (size_column - 1) - i - 1
             CL[i][1] = transform * pas
             CL[i][size_line - 2] = transform * pas
+            
     #condtion ilot
     for i in range(size_column):
         for j in range(size_line):
             if(j < size_line - 2 and i > 1 and j > 1 and i < size_column - 2):
-                if(DOM[i][j]==2):
+                if(DOM[i][j] == 2):
                    CL[i][j] = débit / 4                       
     return CL

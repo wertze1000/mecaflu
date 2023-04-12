@@ -1,8 +1,6 @@
 import numpy as np
 from scipy.sparse import csc_matrix
 from scipy.sparse import linalg
-import matplotlib.pyplot as plt
-import GETCOEF
 from GETCOEF import getCoeff
 
 
@@ -21,7 +19,7 @@ def Laplace(dom, num, cl_d):
 
         for j in range(len(dom[0])):   #iteration sur les colonnes
              
-             if(dom[i,j] == 0): #si on arrive à un zéro on skip
+             if(dom[i, j] == 0): #si on arrive à un zéro on skip
                 continue
              
              else: #(si c'est pas un zéro)
@@ -40,10 +38,11 @@ def Laplace(dom, num, cl_d):
 
     #On organise les valeurs de b pour avoir un vecteur
     b_final = np.zeros(len(b_vec), dtype = float)
+    
     for p in range(len(b_vec)):
         b_final[n_vec[p]] = b_vec[p]
 
-    #On reset les indices pour que ce soit bien en matriciel
+    #On reset les indices pour que ce soit bien en notation matricielle
     k_full -= 1
     line_full -= 1
 
@@ -59,5 +58,6 @@ def Laplace(dom, num, cl_d):
                 continue
             else:
                 laplacian[i,j] = psi[num[i, j] - 1]
+    
     return laplacian, psi
 
