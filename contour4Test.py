@@ -11,14 +11,21 @@ def contourCas4(contour, num):
     noeudsContour = np.zeros(shape = (1,nbLines))
     coordNoeudX = np.zeros(shape = (1,nbLines))
     coordNoeudY = np.zeros(shape = (1,nbLines))
+    xDim = len(num[0]) #x axis
+    yDim = len(num) #y axis
 
     for i in range(nbLines):
         coordNoeudX[0,i] = contour[i,0]
-        coordNoeudY[0,i] = contour[i,1]
+        coordNoeudY[0,i] = yDim - contour[i,1]
         noeudsContour[0,i] = num[contour[i,1], contour[i,0]]
-    
-    print("Lines", nbLines,"Columns", nbColumns, noeudsContour, "nbNoeuds:", np.shape(noeudsContour))
-    print("XCOORD:", coordNoeudX, "YCOORD", coordNoeudY)
+        #print("x,y = [", coordNoeudX[0, i], ", ", coordNoeudY[0, i], "]")
+
+    coordNoeudX = np.flip(coordNoeudX)
+    coordNoeudY = np.flip(coordNoeudY)
+    noeudsContour = np.flip(noeudsContour)
+
+    #print("Lines", nbLines,"Columns", nbColumns, noeudsContour, "nbNoeuds:", np.shape(noeudsContour))
+    #print("XCOORD flipped:", coordNoeudX, "YCOORD flipped", coordNoeudY)
     return noeudsContour, coordNoeudX, coordNoeudY
 
 contourCas4(CONTOUR, num4)
