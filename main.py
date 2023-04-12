@@ -36,15 +36,26 @@ pfield = pressure_field(p, NUM)
 #calculs cas 4
 n, x, y = contourCas4(CONTOUR,NUM)
 uf, vf = contour_vitesse(n, v, u)
+circulation = circu(uf, vf, x, y)
+print("Circulation = ", circulation)
 pf = pressure(uf, vf, rho)
 fx, fy = force(pf, x, y)
-print(fx, fy)
+print("Traînée (fx) =",fx ," Portance (fy) =" ,fy)
 
 
 ### --COLORIAGE + PLOT-- ###
 fig, ax0 = plt.subplots(1, 1)
 c = ax0.matshow(vn, cmap = plt.cm.plasma)
 ax0.set_aspect('equal', 'box')
+
+x_grid = CL = np.zeros(shape= DOM.shape, dtype= int)
+y_grid = CL = np.zeros(shape= DOM.shape, dtype= int)
+
+for i in range(len(DOM)):
+    for j in range(len(DOM[0])):
+        x_grid[i, j]=i
+        y_grid[i, j]=j
+ax0.streamplot(y_grid, x_grid, vy, vx, color='white',density=1)
 
 fig.colorbar(c, ax = ax0)
 plt.show()
