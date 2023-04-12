@@ -91,7 +91,7 @@ def contourCas4(contour, num): #Dans le sens aire à droite
     for i in range(nbLines):
         coordNoeudX[0,i] = contour[i,0]
         coordNoeudY[0,i] = yDim - contour[i,1]
-        noeudsContour[0,i] = num[contour[i,1], contour[i,0]] 
+        noeudsContour[0,i] = num[coordNoeudY[0,i], contour[i,0]] 
         #Recherche de la valeur du noeud dans NUM sur base des coordonnées trouvées
 
     return noeudsContour.flatten(), coordNoeudX.flatten(), coordNoeudY.flatten()
