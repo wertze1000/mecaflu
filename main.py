@@ -11,6 +11,8 @@ from CONTOUR import contour
 from CONTOUR import contour_vitesse
 from FORCE import force
 from PRESSURE import pressure_field
+from CONTOUR import contourCas4
+
 #importation des matrices
 NUM = np.rot90(np.loadtxt('./data/4-num.txt', dtype = int))
 DOM = np.rot90(np.loadtxt('./data/4-dom.txt', dtype = int))
@@ -23,7 +25,7 @@ débit = (10 * 7 + 5 * 5) * 0.1
 rho = 1000
        
 ### --TEST-- ###
-CL_D = cl(DOM, débit)
+CL_D = cl4(DOM, débit)
 lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
 u, v = velocity(lap, psi, DOM, NUM, 2)
 #print("U =", u,"V =", v)
@@ -32,8 +34,10 @@ vx, vy, vn=velocity_field(u, v, NUM)
 p = pressure(v,u,rho)
 pfield = pressure_field(p,NUM)
 
-x, y, n = contour(DOM,NUM)
-uf, vf=contour_vitesse(n,v,u)
+
+n, x, y = contourCas4(CONTOUR,NUM)
+print(n, "of shape", n.shape, "first elem", n[0])
+uf, vf = contour_vitesse(n,v,u)
 pf = pressure(uf, vf, rho)
 fx, fy = force(pf, x, y)
 print(fx, fy)
