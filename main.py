@@ -14,10 +14,10 @@ from PRESSURE import pressure_field
 from CONTOUR import contourCas4
 
 #importation des matrices
-NUM = np.rot90(np.loadtxt('./data/4-num.txt', dtype = int))
-DOM = np.rot90(np.loadtxt('./data/4-dom.txt', dtype = int))
+NUM = np.rot90(np.loadtxt('./data/3-num.txt', dtype = int))
+DOM = np.rot90(np.loadtxt('./data/3-dom.txt', dtype = int))
 #CL_D = np.rot90(np.loadtxt('./data/3-cl.txt', dtype = float))
-CONTOUR = np.loadtxt('./data/4-contourObj.txt', dtype = int)
+#CONTOUR = np.loadtxt('./data/4-contourObj.txt', dtype = int)
 
 
 #paramètres
@@ -25,7 +25,7 @@ débit = (10 * 7 + 5 * 5) * 0.1
 rho = 1000
        
 ### --TEST / CALCULS-- ###
-CL_D = cl4(DOM, débit) #cl4 -> cas 4
+CL_D = cl(DOM, débit) #cl4 -> cas 4
 lap, psi = Laplace(DOM, NUM, CL_D) #(psi = lap)
 u, v = velocity(lap, psi, DOM, NUM, 2)
 
@@ -34,8 +34,8 @@ p = pressure(v, u, rho)
 pfield = pressure_field(p, NUM)
 
 #calculs cas 4
-n, x, y = contourCas4(CONTOUR, NUM)
-#x, y, n = contourCas4(CONTOUR, NUM)
+#n, x, y = contourCas4(CONTOUR, NUM)
+x, y, n = contour(DOM, NUM)
 uf, vf = contour_vitesse(n, v, u)
 circulation = circu(uf, vf, x, y)
 print("Circulation = ", circulation)
