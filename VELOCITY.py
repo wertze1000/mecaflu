@@ -1,7 +1,7 @@
 import numpy as np
 from DERIV import deriv
 
-def velocity(laplacian, psi, dom, num, h):
+def velocity(laplacian, psi, dom, num, h): #Sur base des formules fournies
     u = np.zeros(len(psi))
     v = np.zeros(len(psi))
 
@@ -16,7 +16,7 @@ def velocity(laplacian, psi, dom, num, h):
 
     return u, v
 
-def velocity_field(u,v,num):
+def velocity_field(u,v,num): #Renvoie un champ matriciel avec chaque vitesse aux coordonnées du noeud correspondant
     U = np.zeros(shape = num.shape, dtype = float)
     V = np.zeros(shape = num.shape, dtype = float)
     N = np.zeros(shape = num.shape, dtype = float)

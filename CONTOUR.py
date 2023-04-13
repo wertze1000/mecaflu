@@ -30,7 +30,7 @@ def contour(DOM,NUM):
                     i_bord = i
                     j_bord = j
 
-    for i in range(size_line): #bord supp
+    for i in range(size_line): #bord supérieur
         
         if(DOM[i_bord, j_bord + i] == 1):
             j_bord = j_bord - 1 + i
@@ -49,7 +49,7 @@ def contour(DOM,NUM):
         y = np.append(y, i_bord + i)
         n = np.append(n, NUM[i_bord + i][j_bord])
 
-    for i in range(size_line): #bord inf
+    for i in range(size_line): #bord inférieur
         if(DOM[i_bord, j_bord - i] == 1):
             j_bord = j_bord + 1 - i
             break
@@ -70,13 +70,14 @@ def contour(DOM,NUM):
     return x,y,n
     
 def contour_vitesse(n, u, v):
+    #Renvoie les vitesses au contour calculé au préalable
     uf = np.zeros(shape = n.shape, dtype = float)
     vf = np.zeros(shape = n.shape, dtype = float)
     
     for i in range(len(uf)):
         
-        uf[i]=u[n[i] - 1]
-        vf[i]=v[n[i] - 1]
+        uf[i] = u[n[i] - 1]
+        vf[i] = v[n[i] - 1]
     
     return uf, vf
 
@@ -95,6 +96,7 @@ def contourCas4(contour, num): #Dans le sens aire à droite
         #Recherche de la valeur du noeud dans NUM sur base des coordonnées trouvées
 
     return noeudsContour.flatten(), coordNoeudX.flatten(), coordNoeudY.flatten()
+
     
     
         

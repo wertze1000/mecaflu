@@ -1,6 +1,7 @@
 def deriv(f_left, f_c, f_right, type_left, type_c, type_right, h):
     v = 0.0
-    #Formules slide 33 /!\
+    #Sur base des formules vues lors du cours théorique
+    #Permet de calculer les dérivées sur base des différences finies
     if(type_c == 1): #derivée centrée
         v = (f_right - f_left) / (2 * h)
     

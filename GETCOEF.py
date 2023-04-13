@@ -1,5 +1,6 @@
 import numpy as np
-
+#getCoeff sert à lire le fichier cl fourni et à l'adapter dans le but d'assigner les conditions
+#correspondantes à chaque noeud
 def getCoeff(num_left, num_right, num_down, num_up, num_cent, type_cent, cl_cent):
 
     if(type_cent == 1):

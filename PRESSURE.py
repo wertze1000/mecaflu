@@ -4,7 +4,7 @@ def norm(x,y):
 
     return np.sqrt(x*x + y*y)
 
-def pressure(u,v,rho):
+def pressure(u,v,rho): #En repartant des formules fournies
     p = np.zeros(len(u), dtype=float)
     
     for i in range(len(p)):

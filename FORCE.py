@@ -1,3 +1,5 @@
+#Sur base des formules fournies, on calule la force grâce 
+#à la pression en un point et les coordonés de celui-ci
 def force(p,x,y):
     fx = 0.0
     fy = 0.0
